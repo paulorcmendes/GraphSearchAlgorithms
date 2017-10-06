@@ -10,6 +10,11 @@ namespace GraphSearchAlgorithms
     {
         static void Main(string[] args)
         {
+            Node fagaras = new Node("Fagaras");
+
+            Console.WriteLine("node name is " + fagaras.Name);
+
+            Console.ReadKey();
         }
     }
 }
