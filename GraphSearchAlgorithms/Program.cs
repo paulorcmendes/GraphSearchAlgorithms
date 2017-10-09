@@ -93,14 +93,18 @@ namespace GraphSearchAlgorithms
         static void Main(string[] args)
         {
             InitGraph();
-            foreach(KeyValuePair<String, Node> entry in graph)
+            List<Neighbor> border = new List<Neighbor>();
+
+            border.Add(new Neighbor(graph["Fagaras"], 2));
+            border.Add(new Neighbor(graph["Eforie"], 7));
+            border.Add(new Neighbor(graph["Hirsova"], 4));
+            border.Add(new Neighbor(graph["Bucareste"], 2));
+            border.Add(new Neighbor(graph["Timisoara"], 1));
+            border.Sort();
+            foreach (Neighbor entry in border)
             {
-                Console.Write(entry.Value.Name+": ");
-                foreach (Neighbor neighbor in entry.Value.Neighbors)
-                {
-                    Console.Write(neighbor.Cost+", ");
-                }
-                Console.WriteLine();
+                Console.Write(entry.Node.Name+": "+ entry.Cost);
+                
                 Console.WriteLine();
             }
 
