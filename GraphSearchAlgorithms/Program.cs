@@ -90,22 +90,69 @@ namespace GraphSearchAlgorithms
 
             graph["Eforie"].Neighbors.Add(new Neighbor(graph["Hirsova"], 86));
         }
+        static bool IsInTheBorder(Node node, List<Path> border) {
+            foreach (Path path in border) {
+                if (path.Equals(node)) return true;
+            }
+            return false;
+        }
+        static string PathToString(List<Node> path) {
+            string msg = "";
+            foreach (Node node in path) {
+                msg += "-->" + node.Name;
+            }
+            return msg;
+        }
         static void Main(string[] args)
         {
+            bool found;
             InitGraph();
-            List<Neighbor> border = new List<Neighbor>();
+            Path initialState = new Path(graph["Zerind"], 0);
+            Node goalState = graph["Vaslui"];
 
-            border.Add(new Neighbor(graph["Fagaras"], 2));
-            border.Add(new Neighbor(graph["Eforie"], 7));
-            border.Add(new Neighbor(graph["Hirsova"], 4));
-            border.Add(new Neighbor(graph["Bucareste"], 2));
-            border.Add(new Neighbor(graph["Timisoara"], 1));
-            border.Sort();
-            foreach (Neighbor entry in border)
+            //defining initial and final states
+            List<Path> border = new List<Path>();
+            List<Node> explored = new List<Node>();
+
+            //adding initial state to the border
+            border.Add(initialState);
+            found = false;
+            Path currentNode = null; //current node being explored
+            while (!found) {
+                if (border.Count == 0) {
+                    //if there are no nodes in the border, we haven't found
+                    break;
+                }
+                currentNode = border[0];
+                border.RemoveAt(0);
+                explored.Add(currentNode.Node);
+                foreach(Neighbor neighbor in currentNode.Node.Neighbors){
+                    if (!IsInTheBorder(neighbor.Node, border) && !explored.Contains(neighbor.Node)) {
+                        //Console.WriteLine(currentNode.Node.Name +" -> "+neighbor.Node.Name);
+                        Path newPath;
+                        if (neighbor.Node.Equals(goalState)) {                             
+                            newPath = new Path(neighbor.Node, currentNode.Cost+neighbor.Cost);
+                            newPath.PathToMe = currentNode.PathToMe;
+                            newPath.PathToMe.Add(currentNode.Node);
+                            currentNode = newPath;
+                            found = true;
+                            break;
+                        }
+                        newPath = new Path(neighbor.Node, currentNode.Cost + neighbor.Cost);
+                        newPath.PathToMe = currentNode.PathToMe.ToList();
+                        newPath.PathToMe.Add(currentNode.Node);
+                        border.Add(newPath);                        
+                    }
+                }
+            }
+            if (found)
             {
-                Console.Write(entry.Node.Name+": "+ entry.Cost);
-                
-                Console.WriteLine();
+                Console.WriteLine(currentNode.Node.Name + " " + currentNode.Cost);
+                Console.WriteLine(PathToString(currentNode.PathToMe));
+            }
+            else
+            {
+                Console.WriteLine("Path not found");
             }
 
             Console.ReadKey();

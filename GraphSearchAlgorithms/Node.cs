@@ -34,5 +34,9 @@ namespace GraphSearchAlgorithms
                 return this.neighbors;
             }
         }
+        public String toString()
+        {
+            return Name;
+        }
     }
 }
