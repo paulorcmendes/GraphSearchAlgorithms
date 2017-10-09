@@ -108,6 +108,11 @@ namespace GraphSearchAlgorithms
             bool found;
             Path initialState = new Path(initial, 0);
             Node goalState = goal;
+            if (initial.Equals(goal)) {
+                initialState.PathToMe.Add(initial);
+                return initialState;
+            }
+                  
 
             //defining initial and final states
             List<Path> border = new List<Path>();
@@ -153,7 +158,8 @@ namespace GraphSearchAlgorithms
                     }
                 }
             }
-            return currentNode;
+            if(found) return currentNode;
+            return null;
         }
     }
 }
