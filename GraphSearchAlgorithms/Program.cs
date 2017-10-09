@@ -107,8 +107,8 @@ namespace GraphSearchAlgorithms
         {
             bool found;
             InitGraph();
-            Path initialState = new Path(graph["Zerind"], 0);
-            Node goalState = graph["Vaslui"];
+            Path initialState = new Path(graph["Arad"], 0);
+            Node goalState = graph["Bucareste"];
 
             //defining initial and final states
             List<Path> border = new List<Path>();
@@ -131,20 +131,20 @@ namespace GraphSearchAlgorithms
                 explored.Add(currentNode.Node);
                 foreach(Neighbor neighbor in currentNode.Node.Neighbors){
                     if (!IsInTheBorder(neighbor.Node, border) && !explored.Contains(neighbor.Node)) {
-                        Path newPath;
-                        if (neighbor.Node.Equals(goalState)) {                             
-                            newPath = new Path(neighbor.Node, currentNode.Cost+neighbor.Cost);
-                            newPath.PathToMe = currentNode.PathToMe.ToList();
-                            newPath.PathToMe.Add(currentNode.Node);
-                            currentNode = newPath;
+                        //new path created using the current node reached and the cost to reach it
+                        Path newPath = new Path(neighbor.Node, currentNode.Cost + neighbor.Cost);
 
+                        //saying that the path to me is the path to my father plus my father itself
+                        newPath.PathToMe = currentNode.PathToMe.ToList();
+                        newPath.PathToMe.Add(currentNode.Node); ;
+
+                        if (neighbor.Node.Equals(goalState)) {     
+                            currentNode = newPath;
+                            //adding the goal node to the path
                             currentNode.PathToMe.Add(currentNode.Node);
                             found = true;
                             break;
                         }
-                        newPath = new Path(neighbor.Node, currentNode.Cost + neighbor.Cost);
-                        newPath.PathToMe = currentNode.PathToMe.ToList();
-                        newPath.PathToMe.Add(currentNode.Node);
                         border.Add(newPath);                        
                     }
                 }
