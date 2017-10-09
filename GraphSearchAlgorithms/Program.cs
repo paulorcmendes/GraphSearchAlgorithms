@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GraphSearchAlgorithms
 {
@@ -96,19 +93,13 @@ namespace GraphSearchAlgorithms
             }
             return false;
         }
-        static string PathToString(List<Node> path) {
-            string msg = "";
-            foreach (Node node in path) {
-                msg += "-->" + node.Name;
-            }
-            return msg;
-        }
+        
         static void Main(string[] args)
         {
             
             InitGraph();
             
-            Console.WriteLine(PathToString((BreadthFirstSearch(graph["Oradea"], graph["Neamt"])).PathToMe));
+            Console.WriteLine(BreadthFirstSearch(graph["Arad"], graph["Bucareste"]));
             Console.ReadKey();
 
         }

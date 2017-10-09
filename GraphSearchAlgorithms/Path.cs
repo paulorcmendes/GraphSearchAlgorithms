@@ -24,5 +24,20 @@ namespace GraphSearchAlgorithms
                 pathToMe = value;
             }
         }
+
+        private string PathToString(List<Node> path)
+        {
+            string msg = "";
+            foreach (Node node in path)
+            {
+                msg += "-->" + node.Name;
+            }
+            return msg;
+        }
+
+        public override string ToString()
+        {
+            return PathToString(PathToMe) + " with cost: " + base.Cost;
+        }
     }
 }
