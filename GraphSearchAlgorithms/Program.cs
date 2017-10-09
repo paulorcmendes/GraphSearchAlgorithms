@@ -105,10 +105,18 @@ namespace GraphSearchAlgorithms
         }
         static void Main(string[] args)
         {
-            bool found;
+            
             InitGraph();
-            Path initialState = new Path(graph["Arad"], 0);
-            Node goalState = graph["Bucareste"];
+            
+            Console.WriteLine(PathToString((BreadthFirstSearch(graph["Oradea"], graph["Neamt"])).PathToMe));
+            Console.ReadKey();
+
+        }
+
+        static Path BreadthFirstSearch(Node initial, Node goal) {
+            bool found;
+            Path initialState = new Path(initial, 0);
+            Node goalState = goal;
 
             //defining initial and final states
             List<Path> border = new List<Path>();
@@ -118,8 +126,10 @@ namespace GraphSearchAlgorithms
             border.Add(initialState);
             found = false;
             Path currentNode = null; //current node being explored
-            while (!found) {
-                if (border.Count == 0) {
+            while (!found)
+            {
+                if (border.Count == 0)
+                {
                     //if there are no nodes in the border, we haven't found
                     break;
                 }
@@ -129,8 +139,10 @@ namespace GraphSearchAlgorithms
                 border.RemoveAt(0);
                 //adding node to the explored set
                 explored.Add(currentNode.Node);
-                foreach(Neighbor neighbor in currentNode.Node.Neighbors){
-                    if (!IsInTheBorder(neighbor.Node, border) && !explored.Contains(neighbor.Node)) {
+                foreach (Neighbor neighbor in currentNode.Node.Neighbors)
+                {
+                    if (!IsInTheBorder(neighbor.Node, border) && !explored.Contains(neighbor.Node))
+                    {
                         //new path created using the current node reached and the cost to reach it
                         Path newPath = new Path(neighbor.Node, currentNode.Cost + neighbor.Cost);
 
@@ -138,27 +150,19 @@ namespace GraphSearchAlgorithms
                         newPath.PathToMe = currentNode.PathToMe.ToList();
                         newPath.PathToMe.Add(currentNode.Node); ;
 
-                        if (neighbor.Node.Equals(goalState)) {     
+                        if (neighbor.Node.Equals(goalState))
+                        {
                             currentNode = newPath;
                             //adding the goal node to the path
                             currentNode.PathToMe.Add(currentNode.Node);
                             found = true;
                             break;
                         }
-                        border.Add(newPath);                        
+                        border.Add(newPath);
                     }
                 }
             }
-            if (found)
-            {
-                Console.WriteLine(PathToString(currentNode.PathToMe)+" with cost "+currentNode.Cost);
-            }
-            else
-            {
-                Console.WriteLine("Path not found");
-            }
-
-            Console.ReadKey();
+            return currentNode;
         }
     }
 }
