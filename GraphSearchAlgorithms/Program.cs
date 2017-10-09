@@ -123,18 +123,22 @@ namespace GraphSearchAlgorithms
                     //if there are no nodes in the border, we haven't found
                     break;
                 }
+
+                //removing the node that is currently being explored from the border
                 currentNode = border[0];
                 border.RemoveAt(0);
+                //adding node to the explored set
                 explored.Add(currentNode.Node);
                 foreach(Neighbor neighbor in currentNode.Node.Neighbors){
                     if (!IsInTheBorder(neighbor.Node, border) && !explored.Contains(neighbor.Node)) {
-                        //Console.WriteLine(currentNode.Node.Name +" -> "+neighbor.Node.Name);
                         Path newPath;
                         if (neighbor.Node.Equals(goalState)) {                             
                             newPath = new Path(neighbor.Node, currentNode.Cost+neighbor.Cost);
-                            newPath.PathToMe = currentNode.PathToMe;
+                            newPath.PathToMe = currentNode.PathToMe.ToList();
                             newPath.PathToMe.Add(currentNode.Node);
                             currentNode = newPath;
+
+                            currentNode.PathToMe.Add(currentNode.Node);
                             found = true;
                             break;
                         }
@@ -147,8 +151,7 @@ namespace GraphSearchAlgorithms
             }
             if (found)
             {
-                Console.WriteLine(currentNode.Node.Name + " " + currentNode.Cost);
-                Console.WriteLine(PathToString(currentNode.PathToMe));
+                Console.WriteLine(PathToString(currentNode.PathToMe)+" with cost "+currentNode.Cost);
             }
             else
             {
