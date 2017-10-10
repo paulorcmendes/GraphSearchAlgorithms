@@ -7,7 +7,8 @@ namespace GraphSearchAlgorithms
     class Program
     {
         static Dictionary<String, Node> graph;
-        static void InitGraph() {
+        static void InitGraph() 
+        {
             String[] namesOfNodes = { "Arad", "Zerind", "Oradea", "Timisoara",
                                       "Lugoj", "Mehadia", "Drobeta", "Craiova",
                                       "Sibiu", "Fagaras", "Rimnicu", "Pitesti",
@@ -20,7 +21,8 @@ namespace GraphSearchAlgorithms
             }
             InitEdges();
         }
-        static void InitEdges() {
+        static void InitEdges() 
+        {
             graph["Arad"].Neighbors.Add(new Neighbor(graph["Sibiu"], 140));
             graph["Arad"].Neighbors.Add(new Neighbor(graph["Timisoara"], 118));
             graph["Arad"].Neighbors.Add(new Neighbor(graph["Zerind"], 75));
@@ -87,7 +89,8 @@ namespace GraphSearchAlgorithms
 
             graph["Eforie"].Neighbors.Add(new Neighbor(graph["Hirsova"], 86));
         }
-        static bool IsInTheBorder(Node node, List<Path> border) {
+        static bool IsInTheBorder(Node node, List<Path> border) 
+        {
             foreach (Path path in border) {
                 if (path.Equals(node)) return true;
             }
@@ -95,18 +98,20 @@ namespace GraphSearchAlgorithms
         }
         
         static void Main(string[] args)
-        {
-            
+        {            
             InitGraph();
             Console.WriteLine("BFS:");
             Console.WriteLine(BreadthFirstSearch(graph["Arad"], graph["Bucareste"]));
             Console.WriteLine("Dijkstra:");
             Console.WriteLine(UniformCostSearch(graph["Arad"], graph["Bucareste"]));
-            Console.ReadKey();
+            Console.WriteLine("A Star:");
+            Console.WriteLine(AStarSearch(graph["Arad"], graph["Bucareste"]));
 
+            Console.ReadKey();
         }
 
-        static Path BreadthFirstSearch(Node initial, Node goal) {
+        static Path BreadthFirstSearch(Node initial, Node goal) 
+        {
             bool found;
             Path initialState = new Path(initial, 0);
             Node goalState = goal;
@@ -205,6 +210,63 @@ namespace GraphSearchAlgorithms
                     {
                         //new path created using the current node reached and the cost to reach it
                         Path newPath = new Path(neighbor.Node, currentNode.Cost + neighbor.Cost);
+
+                        //saying that the path to me is the path to my father plus my father itself
+                        newPath.PathToMe = currentNode.PathToMe.ToList();
+                        newPath.PathToMe.Add(currentNode.Node);
+
+
+                        border.Add(newPath);
+                        border.Sort();
+                    }
+                }
+            }
+            if (found) return currentNode;
+            return null;
+        }
+
+        static Path AStarSearch(Node initial, Node goal)
+        {
+            bool found;
+            Path initialState = new Path(initial, 0, CATEGORY.A_STAR);
+            Node goalState = goal;         
+
+            //defining initial and final states
+            List<Path> border = new List<Path>();
+            List<Node> explored = new List<Node>();
+
+            //adding initial state to the border
+            border.Add(initialState);
+            found = false;
+            Path currentNode = null; //current node being explored
+            while (!found)
+            {
+                if (border.Count == 0)
+                {
+                    //if there are no nodes in the border, we haven't found
+                    break;
+                }
+
+                //removing the node that is currently being explored from the border
+                currentNode = border[0];
+                border.RemoveAt(0);
+
+                if (currentNode.Node.Equals(goalState))
+                {
+                    //adding the goal node to the path
+                    currentNode.PathToMe.Add(currentNode.Node);
+                    found = true;
+                    break;
+                }
+
+                //adding node to the explored set
+                explored.Add(currentNode.Node);
+                foreach (Neighbor neighbor in currentNode.Node.Neighbors)
+                {
+                    if (!explored.Contains(neighbor.Node))
+                    {
+                        //new path created using the current node reached and the cost to reach it
+                        Path newPath = new Path(neighbor.Node, currentNode.Cost + neighbor.Cost, CATEGORY.A_STAR);
 
                         //saying that the path to me is the path to my father plus my father itself
                         newPath.PathToMe = currentNode.PathToMe.ToList();

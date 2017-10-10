@@ -6,15 +6,24 @@ using System.Threading.Tasks;
 
 namespace GraphSearchAlgorithms
 {
+    public enum CATEGORY{BREADTH_FIRST, UNIFORM_COST, A_STAR}
     class Path : Neighbor, IComparable<Path>
     {
         private List<Node> pathToMe;
+        private CATEGORY myCategory;
         public Path(Node node, int cost) : base(node, cost)
         {
             pathToMe = new List<Node>();
+            MyCategory = CATEGORY.BREADTH_FIRST;
+        }
+        public Path(Node node, int cost, CATEGORY myCategory) : base(node, cost)
+        {
+            pathToMe = new List<Node>();
+            MyCategory = myCategory;
         }
 
-        public List<Node> PathToMe {
+        public List<Node> PathToMe 
+        {
             get
             {
                 return pathToMe;
@@ -22,6 +31,17 @@ namespace GraphSearchAlgorithms
             set
             {
                 pathToMe = value;
+            }
+        }
+        public CATEGORY MyCategory
+        {
+            get
+            {
+                return myCategory;
+            }
+            set
+            {
+                myCategory = value;
             }
         }
 
@@ -41,7 +61,14 @@ namespace GraphSearchAlgorithms
         }
 
         public int CompareTo(Path other)
-        {
+        {   
+            if(myCategory == CATEGORY.A_STAR)
+            {
+                int v1 = Cost+Expectation;
+                int v2 = other.Cost + other.Expectation;
+
+                return v1.CompareTo(v2);
+            }         
             return Cost.CompareTo(other.Cost);
         }
     }
