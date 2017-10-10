@@ -19,6 +19,7 @@ namespace GraphSearchAlgorithms
             {
                 graph.Add(name, new Node(name));
             }
+            SetExpectations();
             InitEdges();
         }
         static void InitEdges() 
@@ -96,6 +97,29 @@ namespace GraphSearchAlgorithms
             }
             return false;
         }
+        static void SetExpectations()
+        {
+            graph["Arad"].Expectation = 366;
+            graph["Bucareste"].Expectation = 0;
+            graph["Craiova"].Expectation = 160;
+            graph["Drobeta"].Expectation = 242;
+            graph["Eforie"].Expectation = 161;
+            graph["Fagaras"].Expectation = 176;
+            graph["Giurgiu"].Expectation = 77;
+            graph["Hirsova"].Expectation = 151;
+            graph["Iasi"].Expectation = 226;
+            graph["Lugoj"].Expectation = 244;
+            graph["Mehadia"].Expectation = 241;
+            graph["Neamt"].Expectation = 234;
+            graph["Oradea"].Expectation = 380;
+            graph["Pitesti"].Expectation = 100;
+            graph["Rimnicu"].Expectation = 193;
+            graph["Sibiu"].Expectation = 253;
+            graph["Timisoara"].Expectation = 329;
+            graph["Urziceni"].Expectation = 80;
+            graph["Vaslui"].Expectation = 199;
+            graph["Zerind"].Expectation = 374;
+        }
         
         static void Main(string[] args)
         {            
@@ -161,6 +185,11 @@ namespace GraphSearchAlgorithms
                             break;
                         }
                         border.Add(newPath);
+                        //foreach (Path p in border) {
+                        //    Console.Write(p.Node+" c:"+p.Cost+" e:"+p.Node.Expectation+"s: "+(p.Cost+p.Node.Expectation)+"; ");                            
+                        //}
+                        //Console.WriteLine();
+                        //Console.ReadKey();
                     }
                 }
             }
@@ -218,6 +247,12 @@ namespace GraphSearchAlgorithms
 
                         border.Add(newPath);
                         border.Sort();
+                        foreach (Path p in border)
+                        {
+                            Console.Write(p.Node + " c:" + p.Cost + " e:" + p.Node.Expectation + "s: " + (p.Cost + p.Node.Expectation) + "; ");
+                        }
+                        Console.WriteLine();
+                        Console.ReadKey();
                     }
                 }
             }
@@ -275,6 +310,12 @@ namespace GraphSearchAlgorithms
 
                         border.Add(newPath);
                         border.Sort();
+                        foreach (Path p in border)
+                        {
+                            Console.Write(p.Node + " c:" + p.Cost + " e:" + p.Node.Expectation + "s: " + (p.Cost + p.Node.Expectation) + "; ");
+                        }
+                        Console.WriteLine();
+                        Console.ReadKey();
                     }
                 }
             }

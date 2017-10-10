@@ -64,8 +64,8 @@ namespace GraphSearchAlgorithms
         {   
             if(myCategory == CATEGORY.A_STAR)
             {
-                int v1 = Cost+Expectation;
-                int v2 = other.Cost + other.Expectation;
+                int v1 = Cost+Node.Expectation;
+                int v2 = other.Cost + other.Node.Expectation;
 
                 return v1.CompareTo(v2);
             }         
