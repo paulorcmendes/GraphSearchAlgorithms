@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GraphSearch.cs" />
     <Compile Include="Neighbor.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Path.cs" />
