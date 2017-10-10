@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace GraphSearchAlgorithms
 {
+	//Class Node
     class Node
     {
         private List<Neighbor> neighbors;
