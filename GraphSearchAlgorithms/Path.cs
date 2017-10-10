@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GraphSearchAlgorithms
 {
-    class Path : Neighbor
+    class Path : Neighbor, IComparable<Path>
     {
         private List<Node> pathToMe;
         public Path(Node node, int cost) : base(node, cost)
@@ -38,6 +38,11 @@ namespace GraphSearchAlgorithms
         public override string ToString()
         {
             return PathToString(PathToMe) + " with cost: " + base.Cost;
+        }
+
+        public int CompareTo(Path other)
+        {
+            return Cost.CompareTo(other.Cost);
         }
     }
 }

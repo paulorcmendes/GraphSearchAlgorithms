@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GraphSearchAlgorithms
 {
-    class Neighbor: IComparable<Neighbor>
+    class Neighbor
     {
         private Node node;
         private int cost;
@@ -40,11 +40,6 @@ namespace GraphSearchAlgorithms
             {
                 this.cost = value;
             }
-        }
-
-        public int CompareTo(Neighbor other)
-        {
-            return this.cost.CompareTo(other.cost);
         }
     }
 }
