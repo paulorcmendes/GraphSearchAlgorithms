@@ -120,10 +120,10 @@ namespace GraphSearchAlgorithms
             InitGraph();
             Console.WriteLine("BFS:");
             Console.WriteLine(GraphSearch.BreadthFirstSearch(graph["Arad"], graph["Bucareste"]));
-            Console.WriteLine("Dijkstra:");
-            Console.WriteLine(GraphSearch.UniformCostSearch(graph["Arad"], graph["Bucareste"]));
-            Console.WriteLine("A Star:");
-            Console.WriteLine(GraphSearch.AStarSearch(graph["Arad"], graph["Bucareste"]));
+            //Console.WriteLine("Dijkstra:");
+            //Console.WriteLine(GraphSearch.UniformCostSearch(graph["Arad"], graph["Bucareste"]));
+            //Console.WriteLine("A Star:");
+            //Console.WriteLine(GraphSearch.AStarSearch(graph["Arad"], graph["Bucareste"]));
 
             Console.ReadKey();
         }

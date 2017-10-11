@@ -60,11 +60,11 @@ namespace GraphSearchAlgorithms
                             break;
                         }
                         border.Add(newPath);
-                        //foreach (Path p in border) {
-                        //    Console.Write(p.Node+" c:"+p.Cost+" e:"+p.Node.Expectation+"s: "+(p.Cost+p.Node.Expectation)+"; ");                            
-                        //}
-                        //Console.WriteLine();
-                        //Console.ReadKey();
+                        foreach (Path p in border) {
+                            Console.Write(p.Node+" c:"+p.Cost+" e:"+p.Node.Expectation+"s: "+(p.Cost+p.Node.Expectation)+"; ");                            
+                        }
+                        Console.WriteLine();
+                        Console.ReadKey();
                     }
                 }
             }
@@ -202,7 +202,7 @@ namespace GraphSearchAlgorithms
         {
             foreach (Path path in border)
             {
-                if (path.Equals(node)) return true;
+                if (path.Node.Equals(node)) return true;
             }
             return false;
         }
