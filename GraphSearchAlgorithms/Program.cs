@@ -116,14 +116,42 @@ namespace GraphSearchAlgorithms
         }
         
         static void Main(string[] args)
-        {            
+        {
+            Path path;
             InitGraph();
-            Console.WriteLine("BFS:");
-            Console.WriteLine(GraphSearch.BreadthFirstSearch(graph["Arad"], graph["Bucareste"]));
-            //Console.WriteLine("Dijkstra:");
-            //Console.WriteLine(GraphSearch.UniformCostSearch(graph["Arad"], graph["Bucareste"]));
-            //Console.WriteLine("A Star:");
-            //Console.WriteLine(GraphSearch.AStarSearch(graph["Arad"], graph["Bucareste"]));
+
+            Console.WriteLine("\nBFS:");
+            path = GraphSearch.BreadthFirstSearch(graph["Arad"], graph["Bucareste"]);
+            if (path != null)
+            {
+                Console.WriteLine(path);
+            }
+            else
+            {
+                Console.WriteLine("Path not found :(");
+            }
+
+            Console.WriteLine("\nUniform Cost:");
+            path = GraphSearch.UniformCostSearch(graph["Arad"], graph["Bucareste"]);
+            if (path != null)
+            {
+                Console.WriteLine(path);
+            }
+            else
+            {
+                Console.WriteLine("Path not found :(");
+            }
+
+            Console.WriteLine("\nAStar:");
+            path = GraphSearch.AStarSearch(graph["Arad"], graph["Bucareste"]);
+            if (path != null)
+            {
+                Console.WriteLine(path);
+            }
+            else
+            {
+                Console.WriteLine("Path not found :(");
+            }            
 
             Console.ReadKey();
         }
